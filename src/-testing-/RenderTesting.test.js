@@ -1,15 +1,21 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "@testing-library/react";
+import RenderTesting from "../RenderTesting";
 
-import  RenderTesting  from "../RenderTesting";
 
-test("it works", () => {
-  const root = document.createElement("div");
-  ReactDOM.render(<RenderTesting />, root);
 
-  expect(root.querySelector("h1").textContent).toBe("React Testing Library");
-  expect(root.querySelector("label").textContent).toBe(
-    "What needs to be done?"
-  );
-  expect(root.querySelector("button").textContent).toBe("Add #1");
+test("it works getByText", () => {
+  const { getByText } = render(<RenderTesting />);
+
+  expect(getByText("React Testing Library")).not.toBeNull();
+  expect(getByText("Add #1")).not.toBeNull();
+  // Above code can be shortend to
+  getByText("React Testing Library");
+  getByText("Add #1");
+});
+test("it works getByLabelText", () => {
+  const { getByLabelText } = render(<RenderTesting />);
+  
+  expect(getByLabelText("What needs to be done?")).not.toBeNull();
+  getByLabelText("What needs to be done?");
 });
